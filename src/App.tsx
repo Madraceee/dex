@@ -1,12 +1,8 @@
-import { useContext } from 'react';
-import {GlobalContext} from "./contexts/GLobalContext";
 import Nav from './components/Nav';
 import './App.css';
-import Dialog from './components/Dialog';
-import WalletModal from './components/WalletModal';
-import Loader from './components/Loader';
+
 import Home from './components/Home';
-import SelectModal from './components/SelectModal';
+
 
 const App = ()=> {
   return (

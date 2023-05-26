@@ -1,5 +1,4 @@
-import {useContext,ReactElement, useState} from "react";
-import { GlobalContext, WalletState } from "../contexts/GLobalContext";
+import {ReactElement} from "react";
 import WalletModal from "./WalletModal";
 import SelectModal from "./SelectModal";
 import { ModalState } from "../contexts/GLobalContext";
@@ -12,12 +11,10 @@ interface Props{
 
 const ModalManager = (props: Props): ReactElement => {
 
-    const {walletState} = useContext(GlobalContext);
-
     return (
         <div>            
             <Dialog
-                isOpen={props.state === ModalState.Wallet || walletState === WalletState.Connecting ? true : false}
+                isOpen={props.state === ModalState.Wallet ? true : false}
                 children={WalletModal()}
                 closeOnOuterClick={props.closeModal}
             />

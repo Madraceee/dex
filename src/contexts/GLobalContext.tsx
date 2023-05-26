@@ -17,10 +17,12 @@ export interface GlobalContextInterface{
     openModal : ModalState,    
     address : string,
     balance : string,
+    token: string,
     setWalletState : Dispatch<SetStateAction<WalletState>>,
     setOpenModal : Dispatch<SetStateAction<ModalState>>,
     setAddress : Dispatch<SetStateAction<string>>,
-    setBalance : Dispatch<SetStateAction<string>>
+    setBalance : Dispatch<SetStateAction<string>>,
+    setToken : Dispatch<SetStateAction<string>>
 }
 
 
@@ -29,10 +31,12 @@ const defaultState = {
     openModal: ModalState.Null,
     address : "",
     balance: "",
+    token: "Select token",
     setWalletState : ( state: WalletState) =>{},
     setOpenModal : ( state: ModalState) =>{},
     setAddress : ( address: string) =>{},
-    setBalance : ( balance: string) =>{}
+    setBalance : ( balance: string) =>{},
+    setToken : ( token: string) =>{}
 } as GlobalContextInterface;
 
 export const GlobalContext = createContext(defaultState);
@@ -47,9 +51,10 @@ export default function GlobalProvider({children}: GlobalContextProps){
     const [openModal,setOpenModal] = useState<ModalState>(ModalState.Null);
     const [address,setAddress] = useState<string>("");
     const [balance,setBalance] = useState<string>("");
+    const [token,setToken] = useState<string>("Select Token");
     
     return(
-        <GlobalContext.Provider value={{walletState,openModal,address,balance,setWalletState,setOpenModal,setAddress,setBalance}} >
+        <GlobalContext.Provider value={{walletState,openModal,address,balance,token,setWalletState,setOpenModal,setAddress,setBalance,setToken}} >
             {children}
         </GlobalContext.Provider>
     )
