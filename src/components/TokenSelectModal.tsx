@@ -10,12 +10,12 @@ const TokenSelectModal = (): ReactElement=>{
             <div className=" max-h-64 overflow-auto">
                 {ethereumTokens.map((token:Token,index:number)=>
                     (
-                        <div key={index} className="flex justify-between py-3 px-2 hover:cursor-pointer hover:bg-[#00000091]" onClick={()=>{
+                        <div key={index} className="flex py-3 px-4  hover:cursor-pointer hover:bg-[#00000091]" onClick={()=>{
                                     (tokenState === TokenState.TO? setToToken(token.name) : setFromToken(token.name))
                                     setOpenModal(ModalState.SWAP);
                         }}>
-                            <span className="inline-flex items-center">{token.name}</span>
                             <img className="w-6 h-auto m-0 rounded-full" src={token.image} alt={"Token logo"}/>
+                            <span className="inline-flex items-center ml-5">{token.name}</span>                            
                         </div>
                     ))
                 }

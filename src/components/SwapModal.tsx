@@ -4,8 +4,8 @@ import { GlobalContext, ModalState, TokenState } from "../context/GlobalContext"
 const Swap = ()=>{
     const {balance,toToken,fromToken,setOpenModal,setTokenState} = useContext(GlobalContext);
 
-    const [fromAmount,setFromAmount] = useState<string>("");
-    const [toAmount,setToAmount] = useState<string>("");
+    const [fromAmount,setFromAmount] = useState<number>(0);
+    const [toAmount,setToAmount] = useState<number>(0);
 
 
 
@@ -16,9 +16,9 @@ const Swap = ()=>{
 
                 <div className="rounded-md gap-2 flex justify-between flex-col px-3 py-2 bg-gray-900">
                     <div className="flex justify-between pt-2">
-                        <input className="bg-transparent focus-visible:outline-none w-3/5" value={fromAmount} onChange={(e)=>setFromAmount(e.target.value)} placeholder="0"/>
+                        <input className="bg-transparent focus-visible:outline-none w-3/5" value={fromAmount} onChange={(e)=>setFromAmount(parseInt(e.target.value!=="" ? e.target.value : "0"))} placeholder="0"/>
                         <button onClick={()=>{setTokenState(TokenState.FROM);setOpenModal(ModalState.TOKENSELECT)}} 
-                                className="text-lg text-white bg-blue-500 px-2 rounded-md opacity-80 hover:opacity-100 ease-in-out duration-100"
+                                className="w-2/6 text-lg text-white bg-blue-500 px-2 rounded-full opacity-80 hover:opacity-100 ease-in-out duration-100"
                         >
                                 {fromToken}
                         </button>
@@ -30,9 +30,9 @@ const Swap = ()=>{
 
                 <div className="rounded-md gap-2 flex justify-between flex-col px-3 py-2 bg-gray-900">
                     <div className="flex justify-between pt-2">
-                        <input className="bg-transparent focus-visible:outline-none w-3/5" value={toAmount} onChange={(e)=>setToAmount(e.target.value)} placeholder="0"/>
+                        <input className="bg-transparent focus-visible:outline-none w-3/5" value={toAmount} onChange={(e)=>setToAmount(parseInt(e.target.value!=="" ? e.target.value : "0"))} placeholder="0"/>
                         <button onClick={()=>{setTokenState(TokenState.TO); setOpenModal(ModalState.TOKENSELECT)}} 
-                                className="text-lg text-white bg-blue-500 px-2 rounded-md opacity-80 hover:opacity-100 ease-in-out duration-100"
+                                className="w-2/6 text-lg text-white bg-blue-500 px-2 rounded-full opacity-80 hover:opacity-100 ease-in-out duration-100"
                         >
                             {toToken}
                         </button>
