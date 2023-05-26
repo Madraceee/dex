@@ -1,11 +1,9 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import {GlobalContext, ModalState, WalletState } from "../contexts/GLobalContext";
-import ModalManager from "./ModalManager";
 
 const WalletStatus =  () => {
 
-    const {walletState,address,setWalletState, setAddress,setBalance} = useContext(GlobalContext);
-    const [showModal,setShowModal] = useState<ModalState>(ModalState.Null);
+    const {walletState,address,setWalletState, setAddress,setBalance,setOpenModal} = useContext(GlobalContext);
 
     const formatAddress = ():string =>{
         if(address === ""){
@@ -17,35 +15,13 @@ const WalletStatus =  () => {
         return formattedAddress;
     }
 
-    useEffect(() => {
-        const handleAccountChange = () => {
-          setWalletState(WalletState.NotConnected);
-          setAddress("");
-          setBalance("")
-        };
-
-        if (window.ethereum) {
-          window.ethereum.on('accountsChanged', handleAccountChange);
-        }
-    
-        return () => {
-          if (window.ethereum) {
-            window.ethereum.removeListener('accountsChanged', handleAccountChange);
-          }
-        };
-      }, []);
-
     return (
         <div>
-            <ModalManager 
-                state={showModal}
-                closeModal={()=>setShowModal(ModalState.Null)}
-            />
             { (walletState === WalletState.NotConnected || walletState === WalletState.Connecting) &&
                 (
                     <button 
-                        className="px-3 py-2 bg-blue-500 text-white font-bold rounded-md hover:scale-110 ease-in-out duration-200"
-                        onClick={()=>{setShowModal(ModalState.Wallet)}}
+                        className="px-3 py-2 bg-blue-500 text-white font-bold rounded-md opacity-80 hover:scale-110 hover:opacity-100 ease-in-out duration-200"
+                        onClick={()=>{setOpenModal(ModalState.Wallet)}}
                     >
                         Connect
                     </button>

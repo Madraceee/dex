@@ -1,16 +1,21 @@
-import React, { ReactElement, useEffect, useRef } from 'react'
+import React, { ReactElement, useContext, useEffect, useRef } from 'react'
 import { concatClasses } from '../utils/helpers';
 import "./Dialog.css";
+import { GlobalContext, ModalState } from '../contexts/GLobalContext';
 
 const Dialog = ({
     isOpen,
     children,
-    closeOnOuterClick,
+    header,
+    closeOnOuterClick    
 }: {
     isOpen: boolean
     children: ReactElement,
+    header: string,
     closeOnOuterClick?: () => void
 }) => {
+
+    const {setOpenModal} = useContext(GlobalContext);
     const bgRef = useRef<HTMLDivElement>(null)
 
     const firstRender = useRef(true)
@@ -32,15 +37,18 @@ const Dialog = ({
 
     return (
         <div
-            onClick={closeOnOuterClick}
+            onClick={()=>setOpenModal(ModalState.Null)}
             ref={bgRef}
             className={concatClasses([
                 'fixed overflow-y-auto bg-black/50 top-0 left-0 right-0 bottom-0 z-20 h-full w-full flex items-center justify-center backdrop-blur-sm',
                 isOpen ? ' dialog-bg-in' : '  dialog-bg-out ',
             ])}
         >
-            <div className='bg-[#000000ca] h-fit max-h-96 px-2 py-2 rounded-md w-full sm:w-fit z-50' onClick={(event)=>event.stopPropagation()}>
-                <div className='w-full block text-right text-white'><span className='hover:cursor-pointer' onClick={closeOnOuterClick}>X</span></div>
+            <div className='bg-[#0d111c] h-fit max-h-96  rounded-md w-full sm:w-fit lg:w-fit lg:max-w-2xl z-50 border border-[#98a1c03d] shadow-dialogBox' onClick={(event)=>event.stopPropagation()}>
+                <div className='w-full p-4 flex justify-between text-white mb-2 border-b border-[#98a1c03d]'>
+                    <span className='text-xl'>{header}</span>
+                    <span className='hover:cursor-pointer flex items-center justify-center' onClick={closeOnOuterClick}><img className='w-4 h-4' src="/close.png" alt="Close" /></span>
+                </div>
                 {React.cloneElement(children, {
                     className:
                         children.props.className +
