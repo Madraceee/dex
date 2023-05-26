@@ -1,13 +1,13 @@
-import React, { MouseEventHandler, useContext, ReactElement, JSXElementConstructor, useEffect } from "react";
-import { GlobalContext, ModalState, WalletState } from "../contexts/GLobalContext";
-import Loader from "./Loader";
+import React, { MouseEventHandler, useContext} from "react";
+import { GlobalContext, ModalState, WalletState } from "../../context/GlobalContext";
+import Loader from "../Loader";
 import { ethers } from "ethers";
 
 const WalletModal = (): React.ReactElement<any, string | React.JSXElementConstructor<any>> =>{
     
     const {walletState,setAddress,setBalance,setWalletState,setOpenModal} = useContext(GlobalContext);
   
-    const connectWallet: MouseEventHandler<HTMLButtonElement> = async ()=>{
+    const connectWallet: MouseEventHandler = async ()=>{
         
         if(!window.ethereum){
             alert("Install Metamask");
@@ -16,14 +16,14 @@ const WalletModal = (): React.ReactElement<any, string | React.JSXElementConstru
         const provider: ethers.providers.Web3Provider | null = new ethers.providers.Web3Provider(window.ethereum,"any");
         if(provider){
             const chainId = await window.ethereum?.request({method:'eth_chainId'});           
-            setWalletState(WalletState.Connecting);
+            setWalletState(WalletState.CONNECTING);
             
             try{
                 await provider.send("eth_requestAccounts",[]);
             }
             catch(error){
                 console.log(error);
-                setWalletState(WalletState.NotConnected)
+                setWalletState(WalletState.NOTCONNECTED)
                 return;
             }
             
@@ -40,7 +40,7 @@ const WalletModal = (): React.ReactElement<any, string | React.JSXElementConstru
                     }
                     catch(error){
                         console.log(error);
-                        setWalletState(WalletState.NotConnected);
+                        setWalletState(WalletState.NOTCONNECTED);
                         return;
                     }
                     
@@ -51,12 +51,12 @@ const WalletModal = (): React.ReactElement<any, string | React.JSXElementConstru
                 setAddress(address);
                 setBalance(ethers.utils.formatEther(balance));
 
-                setWalletState(WalletState.Connected);
-                setOpenModal(ModalState.Swap);        
+                setWalletState(WalletState.CONNECTED);
+                setOpenModal(ModalState.SWAP);        
                            
             }
             else{
-                setWalletState(WalletState.NotConnected);
+                setWalletState(WalletState.NOTCONNECTED);
             }   
             return ;         
         }
@@ -64,9 +64,9 @@ const WalletModal = (): React.ReactElement<any, string | React.JSXElementConstru
 
     return (
         <div className="w-full sm:w-96">            
-            { walletState === WalletState.NotConnected && 
+            { walletState === WalletState.NOTCONNECTED && 
                 (
-                    <div className="flex flex-col my-5 w-2/4 items-center justify-center mx-auto gap-5">
+                    <div className="flex flex-col my-5 w-1/2 items-center justify-center mx-auto gap-5">
                         <button 
                             className="px-3 py-2 bg-blue-500 text-white font-bold rounded-md text-xs sm:text-base"
                             onClick={connectWallet}
@@ -76,7 +76,7 @@ const WalletModal = (): React.ReactElement<any, string | React.JSXElementConstru
                     </div>
                 )
             }
-            { walletState === WalletState.Connecting &&
+            { walletState === WalletState.CONNECTING &&
                 (   
                     <Loader />
                 )

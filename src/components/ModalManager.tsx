@@ -1,44 +1,44 @@
 import {ReactElement, useContext} from "react";
-import WalletModal,{headerWallet} from "./WalletModal";
-import SelectModal,{headerSelect} from "./SelectModal";
+import WalletModal,{headerWallet} from "./WalletModal/WalletModal";
+import TokenSelectModal,{headerSelect} from "./TokenSelectModal";
 import Swap,{headerSwap} from "./SwapModal";
-import { GlobalContext, ModalState } from "../contexts/GLobalContext";
-import Dialog from "./Dialog";
+import { GlobalContext, ModalState } from "../context/GlobalContext";
+import Modal from "./Modal/Modal";
 
 
 const ModalManager = (): ReactElement => {
 
     const {openModal,setOpenModal} = useContext(GlobalContext);
 
-    const closeOnOuterClick = ()=>{
-        setOpenModal(ModalState.Null);
+    const handleOuterClick = ()=>{
+        setOpenModal(ModalState.NULL);
     }
 
-    const closeOnOuterClickSelect = ()=>{
-        setOpenModal(ModalState.Swap);
+    const handleOutClickOnTokenSelect = ()=>{
+        setOpenModal(ModalState.SWAP);
     }
 
     return (
-        <div>            
-            <Dialog
-                isOpen={openModal === ModalState.Wallet ? true : false}
+        <>            
+            <Modal
+                isOpen={openModal === ModalState.WALLET ? true : false}
                 children={WalletModal()}
-                closeOnOuterClick={closeOnOuterClick}
+                closeOnOuterClick={handleOuterClick}
                 header={headerWallet}
             />
-            <Dialog
-                isOpen={openModal === ModalState.Select? true : false}
-                children={SelectModal()}
-                closeOnOuterClick={closeOnOuterClickSelect}
+            <Modal
+                isOpen={openModal === ModalState.TOKENSELECT? true : false}
+                children={TokenSelectModal()}
+                closeOnOuterClick={handleOutClickOnTokenSelect}
                 header={headerSelect}
             />
-            <Dialog
-                isOpen={openModal === ModalState.Swap? true : false}
+            <Modal
+                isOpen={openModal === ModalState.SWAP? true : false}
                 children={Swap()}
-                closeOnOuterClick={closeOnOuterClick}
+                closeOnOuterClick={handleOuterClick}
                 header={headerSwap}
             />
-        </div>
+        </>
     );
 }
 

@@ -1,21 +1,21 @@
-import { createContext, Dispatch, ReactNode, SetStateAction, useState } from "react";
+import { createContext, Dispatch, ReactNode, SetStateAction, useState, useContext } from "react";
 
 export enum WalletState {
-    NotConnected,
-    Connecting,
-    Connected
+    NOTCONNECTED,
+    CONNECTING,
+    CONNECTED
 };
 
 export enum ModalState{
-    Null,
-    Wallet,
-    Select,
-    Swap
+    NULL,
+    WALLET,
+    TOKENSELECT,
+    SWAP
 }
 
 export enum TokenState{
-    To,
-    From
+    TO,
+    FROM
 }
 
 export interface GlobalContextInterface{
@@ -35,15 +35,14 @@ export interface GlobalContextInterface{
     setTokenState: Dispatch<SetStateAction<TokenState>>
 }
 
-
-const defaultState = {
-    walletState : WalletState.NotConnected,
-    openModal: ModalState.Null,
+export const defaultState = {
+    walletState : WalletState.NOTCONNECTED,
+    openModal: ModalState.NULL,
     address : "",
     balance : "",
     toToken : "Select token",
-    fromToken : "Select token",
-    tokenState : TokenState.To,
+    fromToken : "Matic",
+    tokenState : TokenState.TO,
     setWalletState : ( state: WalletState) =>{},
     setOpenModal : ( state: ModalState) =>{},
     setAddress : ( address: string) =>{},
@@ -55,19 +54,16 @@ const defaultState = {
 
 export const GlobalContext = createContext(defaultState);
 
-type GlobalContextProps = {
-    children : ReactNode
-};
 
-export default function GlobalProvider({children}: GlobalContextProps){
+export default function GlobalProvider({children}: {children: ReactNode}){
     
-    const [walletState,setWalletState]  = useState<WalletState>(WalletState.NotConnected);
-    const [openModal,setOpenModal] = useState<ModalState>(ModalState.Null);
+    const [walletState,setWalletState]  = useState<WalletState>(WalletState.NOTCONNECTED);
+    const [openModal,setOpenModal] = useState<ModalState>(ModalState.NULL);
     const [address,setAddress] = useState<string>("");
     const [balance,setBalance] = useState<string>("");
     const [toToken,setToToken] = useState<string>("Select Token");
-    const [fromToken,setFromToken] = useState<string>("Select Token");
-    const [tokenState,setTokenState] = useState<TokenState>(TokenState.To);
+    const [fromToken,setFromToken] = useState<string>("Matic");
+    const [tokenState,setTokenState] = useState<TokenState>(TokenState.TO);
     
     return(
         <GlobalContext.Provider value={{walletState,openModal,address,balance,toToken,fromToken,tokenState,setWalletState,setOpenModal,setAddress,setBalance,setToToken,setFromToken,setTokenState}} >

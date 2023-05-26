@@ -15,6 +15,10 @@ const ethereumTokens: Token[] = [
     {
         name: "Uniswap",
         image: "/images/uniswap-logo.png",
+    },
+    {
+        name: "Matic",
+        image: "/images/matic-logo.png"
     }
 ];
 

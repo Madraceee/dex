@@ -1,5 +1,5 @@
 import { useContext,useState } from "react";
-import { GlobalContext, ModalState, TokenState } from "../contexts/GLobalContext";
+import { GlobalContext, ModalState, TokenState } from "../context/GlobalContext";
 
 const Swap = ()=>{
     const {balance,toToken,fromToken,setOpenModal,setTokenState} = useContext(GlobalContext);
@@ -17,7 +17,7 @@ const Swap = ()=>{
                 <div className="rounded-md gap-2 flex justify-between flex-col px-3 py-2 bg-gray-900">
                     <div className="flex justify-between pt-2">
                         <input className="bg-transparent focus-visible:outline-none w-3/5" value={fromAmount} onChange={(e)=>setFromAmount(e.target.value)} placeholder="0"/>
-                        <button onClick={()=>{setTokenState(TokenState.From);setOpenModal(ModalState.Select)}} 
+                        <button onClick={()=>{setTokenState(TokenState.FROM);setOpenModal(ModalState.TOKENSELECT)}} 
                                 className="text-lg text-white bg-blue-500 px-2 rounded-md opacity-80 hover:opacity-100 ease-in-out duration-100"
                         >
                                 {fromToken}
@@ -31,7 +31,7 @@ const Swap = ()=>{
                 <div className="rounded-md gap-2 flex justify-between flex-col px-3 py-2 bg-gray-900">
                     <div className="flex justify-between pt-2">
                         <input className="bg-transparent focus-visible:outline-none w-3/5" value={toAmount} onChange={(e)=>setToAmount(e.target.value)} placeholder="0"/>
-                        <button onClick={()=>{setTokenState(TokenState.To); setOpenModal(ModalState.Select)}} 
+                        <button onClick={()=>{setTokenState(TokenState.TO); setOpenModal(ModalState.TOKENSELECT)}} 
                                 className="text-lg text-white bg-blue-500 px-2 rounded-md opacity-80 hover:opacity-100 ease-in-out duration-100"
                         >
                             {toToken}
@@ -41,7 +41,7 @@ const Swap = ()=>{
                 </div>
 
             </div>         
-            <button className="w-full rounded-md bg-blue-500 disabled:cursor-not-allowed py-1" disabled={!fromAmount || !toAmount}>Submit</button>
+            <button className="w-full rounded-md bg-blue-500 disabled:cursor-not-allowed py-1 font-semibold" disabled={!fromAmount || !toAmount}>Submit</button>
         </div>
     </div>
   );
